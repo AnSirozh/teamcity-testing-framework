@@ -1,0 +1,69 @@
+### 1. Generate auth tocken
+# @no-cookie-jar
+GET http://172.29.80.1:8111/authenticationTest.html?csrf
+Authorization: Basic admin admin
+
+### 1. Create project
+# @no-cookie-jar
+POST http://admin:admin@172.29.80.1:8111/app/rest/projects
+Content-Type: application/json
+Accept: application/json
+
+{
+  "parentProject": {
+    "locator": "_Root"
+  },
+  "name": "{{$random.alphabetic(10)}}",
+  "id": "{{$random.alphabetic(10)}}",
+  "copyAllAssociatedSettings": true
+}
+
+### 2. Create build configuration
+# @no-cookie-jar
+POST http://admin:admin@172.29.80.1:8111/app/rest/buildTypes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "{{$random.alphabetic(10)}}",
+  "name": "Print hello world",
+  "project": {
+    "id": "{{$random.alphabetic(10)}}"
+  },
+  "steps": {
+    "step": [
+      {
+        "name": "Print hello world",
+        "type": "simpleRunner",
+        "properties": {
+          "property": [
+            {
+              "name": "script.content",
+              "value": "echo 'Hello World!'"
+            },
+            {
+              "name": "teamcity.step.mode",
+              "value": "default"
+            },
+            {
+              "name": "use.custom.script",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
+### 3. Run build
+# @no-cookie-jar
+POST http://admin:admin@172.29.80.1:8111/app/rest/buildQueue
+Content-Type: application/json
+Accept: application/json
+
+{
+  "buildType": {
+    "id": "{{$random.alphabetic(10)}}"
+  }
+}
