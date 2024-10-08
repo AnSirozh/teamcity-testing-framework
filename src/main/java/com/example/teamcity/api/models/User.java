@@ -1,4 +1,4 @@
-package com.example.teamcity.api.model;
+package com.example.teamcity.api.models;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User extends BaseModel{
     private String username;
     private String password;
 }
