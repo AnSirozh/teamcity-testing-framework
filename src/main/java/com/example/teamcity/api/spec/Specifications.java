@@ -13,18 +13,7 @@ import java.util.Base64;
 
 public class Specifications {
 
-    private static Specifications spec;
-
-    private Specifications() {} // для реализации паттерна Singletone
-
-    public static Specifications getSpec() { // так же для синглтона, чтобы создать 1 экземпляр
-        if (spec == null) {
-            spec = new Specifications();
-        }
-        return spec;
-    }
-
-    private RequestSpecBuilder reqBuilder() {
+    private static RequestSpecBuilder reqBuilder() {
         var requestBuilder = new RequestSpecBuilder();
         requestBuilder.addFilter(new RequestLoggingFilter());
         requestBuilder.addFilter(new ResponseLoggingFilter());
@@ -33,12 +22,18 @@ public class Specifications {
         return requestBuilder;
     }
 
-    public RequestSpecification unauthSpec() { // спецификации для НЕ авторизированного пользователя
+    public static RequestSpecification superUserAuth() {
+        var requestBuilder = reqBuilder();
+        requestBuilder.setBaseUri("http://%s:%s@%s/httpAuth".formatted("", Config.getProperty("superUserToken"), Config.getProperty("host")));
+        return requestBuilder.build();
+    }
+
+    public static RequestSpecification unauthSpec() { // спецификации для НЕ авторизированного пользователя
         var requestBuilder = reqBuilder();
         return requestBuilder.build();
     }
 
-    public RequestSpecification authSpec(User user) { // спецификации для авторизированного пользователя
+    public static RequestSpecification authSpec(User user) { // спецификации для авторизированного пользователя
         var requestBuilder = reqBuilder();
         requestBuilder.setBaseUri("http://" + Config.getProperty("host"));
         String auth = user.getUsername() + ":" + user.getPassword();
