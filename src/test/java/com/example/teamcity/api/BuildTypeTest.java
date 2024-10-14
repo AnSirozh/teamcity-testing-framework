@@ -78,15 +78,11 @@ public class BuildTypeTest extends BaseApiTest {
         var secondProject = generate(Project.class);
         superUserCheckRequests.getRequest(PROJECTS).create(secondProject);
 
-        var secondUser = generate(User.class);
-        secondUser.setRoles(generate(Roles.class, "PROJECT_ADMIN", "p:" + secondProject.getId()));
-        superUserCheckRequests.getRequest(USERS).create(secondUser);
-
-        testData.getBuildType().setProject(firstProject);
-        new UncheckedBase(Specifications.authSpec(secondUser), BUILD_TYPES)
+        testData.getBuildType().setProject(secondProject);
+        new UncheckedBase(Specifications.authSpec(firstUser), BUILD_TYPES)
                 .create(testData.getBuildType())
                 .then().assertThat().statusCode(HttpStatus.SC_FORBIDDEN)
-                .body(Matchers.containsString("You do not have enough permissions to edit project with id: %s".formatted(firstProject.getId())));
+                .body(Matchers.containsString("You do not have enough permissions to edit project with id: %s".formatted(secondProject.getId())));
 
     }
 }
