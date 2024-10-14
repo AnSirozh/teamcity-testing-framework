@@ -28,21 +28,17 @@ public class Specifications {
         return requestBuilder.build();
     }
 
-    public static RequestSpecification unauthSpec() { // спецификации для НЕ авторизированного пользователя
+    public static RequestSpecification unauthSpec() {
         var requestBuilder = reqBuilder();
+        requestBuilder.setContentType(ContentType.JSON);
+        requestBuilder.setAccept(ContentType.JSON);
         return requestBuilder.build();
+
     }
 
-    public static RequestSpecification authSpec(User user) { // спецификации для авторизированного пользователя
+    public static RequestSpecification authSpec(User user) {
         var requestBuilder = reqBuilder();
-        requestBuilder.setBaseUri("http://" + Config.getProperty("host"));
-        String auth = user.getUsername() + ":" + user.getPassword();
-        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
-        String authHeader = "Basic " + encodedAuth;
-        requestBuilder.addHeader("Authorization", authHeader);
-
+        requestBuilder.setBaseUri("http://%s:%s@%s".formatted(user.getUsername(), user.getPassword(), Config.getProperty("host")));
         return requestBuilder.build();
     }
-
-
 }
