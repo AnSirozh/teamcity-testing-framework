@@ -1,8 +1,10 @@
 package com.example.teamcity.ui;
 
+import com.codeborne.selenide.Condition;
 import com.example.teamcity.api.models.BuildType;
 import com.example.teamcity.api.models.Project;
 import com.example.teamcity.ui.pages.admin.CreateBuildConfigurationPage;
+import com.example.teamcity.ui.pages.admin.ProjectPage;
 import org.testng.annotations.Test;
 
 import static com.example.teamcity.api.enums.Endpoint.BUILD_TYPES;
@@ -40,6 +42,7 @@ public class CreateBuildConfigurationTest extends BaseUiTest {
         // проверка состояния UI
         // (корректность считывания данных и отображение данных на UI)
         step("Check that build is visible on Project Page (http://localhost:8111/project/{projectName})");
-
+        ProjectPage.open(testData.getProject().getId())
+                .buildName.shouldHave(Condition.exactText(testData.getBuildType().getName()));
     }
 }
