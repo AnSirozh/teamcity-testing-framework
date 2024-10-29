@@ -13,10 +13,8 @@ import static io.qameta.allure.Allure.step;
 
 public class CreateBuildConfigurationTest extends BaseUiTest {
 
-    private static final String REPO_URL = "https://github.com/AlexPshe/spring-core-for-qa";
-
     @Test(description = "User should be able to create build configuration", groups = {"Positive"})
-    public void userCreatesProject() {
+    public void userCreatesBuildConfiguration() {
         // подготовка окружения
         step("Login as user");
         loginAs(testData.getUser());
@@ -45,4 +43,5 @@ public class CreateBuildConfigurationTest extends BaseUiTest {
         ProjectPage.open(testData.getProject().getId())
                 .buildName.shouldHave(Condition.exactText(testData.getBuildType().getName()));
     }
+
 }
