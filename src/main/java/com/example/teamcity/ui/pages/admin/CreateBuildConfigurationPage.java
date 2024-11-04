@@ -10,7 +10,7 @@ public class CreateBuildConfigurationPage extends CreateBasePage{
     private static final String BUILD_CONFIGURATION_SHOW_MODE = "createBuildTypeMenu";
 
     private SelenideElement buildConfigurationNameInput = $("#buildTypeName");
-    public SelenideElement buildTypeNameError = $("#error_buildTypeNameóó");
+    public SelenideElement buildTypeNameError = $("#error_buildTypeName");
 
     public static CreateBuildConfigurationPage open(String projectId) {
         return Selenide.open(CREATE_URL.formatted(projectId, BUILD_CONFIGURATION_SHOW_MODE), CreateBuildConfigurationPage.class);
