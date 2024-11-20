@@ -14,7 +14,7 @@ import static io.qameta.allure.Allure.step;
 
 public class CreateBuildConfigurationTest extends BaseUiTest {
 
-    @Test(description = "User should be able to create build configuration", groups = {"Positive"})
+    @Test(description = "User should be able to create build configuration", groups = {"Positive", "Regression"})
     public void userCreatesBuildConfiguration() {
         // подготовка окружения
         step("Login as user");
@@ -43,7 +43,7 @@ public class CreateBuildConfigurationTest extends BaseUiTest {
                 .buildName.shouldHave(Condition.exactText(testData.getBuildType().getName()));
     }
 
-    @Test(description = "User should not be able to create build type configuration without build name", groups = {"Negative"})
+    @Test(description = "User should not be able to create build type configuration without build name", groups = {"Negative", "Regression"})
     public void userCreatesBuildConfigurationWithoutBuildName() {
         // подготовка окружения
         step("Login as user");

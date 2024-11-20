@@ -12,7 +12,7 @@ import static io.qameta.allure.Allure.step;
 
 public class CreateProjectTest extends BaseUiTest{
 
-    @Test(description = "User should be able to create project", groups = {"Positive"})
+    @Test(description = "User should be able to create project", groups = {"Positive", "Regression"})
     public void userCreatesProject() {
         // подготовка окружения
         step("Login as user");
@@ -47,7 +47,7 @@ public class CreateProjectTest extends BaseUiTest{
         softy.assertTrue(foundProjects);
     }
 
-    @Test(description = "User should not be able to craete project without name", groups = {"Negative"})
+    @Test(description = "User should not be able to craete project without name", groups = {"Negative", "Regression"})
     public void userCreatesProjectWithoutName() {
         // подготовка окружения
         step("Login as user");
