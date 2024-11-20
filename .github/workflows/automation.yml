@@ -33,6 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Добавлено для исправления ошибки ./mvnw: Permission denied
+      - name: Set executable permissions
+        run: chmod +x ./mvnw
+
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
