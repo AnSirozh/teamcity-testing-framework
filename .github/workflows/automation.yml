@@ -22,7 +22,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Validate Checkstyle
-        run: ./mvnw validate
+        run: ./mvn validate
 
   run-tests:
     needs: validate-checkstyle
@@ -36,4 +36,4 @@ jobs:
       - name: Run tests
         continue-on-error: true
         # Указываем группу, чтобы не запустить тесты, связанные с сетапом TeamCity
-        run: ./mvnw test -Dtest='com.example.teamcity.${{ inputs.package }}.**' -Dgroups=Regression
+        run: ./mvn test -Dtest='com.example.teamcity.${{ inputs.package }}.**' -Dgroups=Regression
