@@ -10,7 +10,6 @@ jobs:
         run: echo Происходит деплой бэкенда
 
   deploy-frontend:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy frontend to prod
