@@ -18,7 +18,6 @@ public class CreateBuildConfigurationPage extends CreateBasePage{
     }
 
     public CreateBuildConfigurationPage createForm(String url) {
-        urlInput.shouldBe(visible);
         baseCreateForm(url);
         return this;
     }
