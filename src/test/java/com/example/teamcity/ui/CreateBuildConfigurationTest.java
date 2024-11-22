@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import static com.example.teamcity.api.enums.Endpoint.BUILD_TYPES;
 import static com.example.teamcity.api.enums.Endpoint.PROJECTS;
 import static io.qameta.allure.Allure.step;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class CreateBuildConfigurationTest extends BaseUiTest {
 
@@ -34,7 +35,8 @@ public class CreateBuildConfigurationTest extends BaseUiTest {
 
         // проверка состояния API
         step("Check that build configuration was successfully created with correct data on API level");
-        var createdBuildType = superUserCheckRequests.<BuildType>getRequest(BUILD_TYPES).read("name:" + testData.getBuildType().getName());
+        var createdBuildType = superUserCheckRequests.<BuildType>getRequest(BUILD_TYPES).readWithTimeout(
+                "name:" + testData.getBuildType().getName(), 10, SECONDS, 1, SECONDS);
         softy.assertNotNull(createdBuildType);
 
         // проверка состояния UI

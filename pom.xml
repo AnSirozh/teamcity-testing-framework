@@ -22,6 +22,7 @@
         <selenide.version>7.4.3</selenide.version>
         <swagger-coverage-version>1.5.0</swagger-coverage-version>
         <allure.version>2.27.0</allure.version>
+        <awaitility.version>4.2.2</awaitility.version>
     </properties>
 
     <dependencies>
@@ -112,7 +113,11 @@
             <artifactId>allure-rest-assured</artifactId>
             <version>${allure.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
