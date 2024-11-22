@@ -3,6 +3,7 @@ package com.example.teamcity.ui.pages.admin;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class CreateBuildConfigurationPage extends CreateBasePage{
@@ -22,6 +23,7 @@ public class CreateBuildConfigurationPage extends CreateBasePage{
     }
 
     public CreateBuildConfigurationPage setupBuildConfiguration(String buildConfigurationName) {
+        buildConfigurationNameInput.shouldBe(visible);
         buildConfigurationNameInput.val(buildConfigurationName);
         submitButton.click();
         return this;
