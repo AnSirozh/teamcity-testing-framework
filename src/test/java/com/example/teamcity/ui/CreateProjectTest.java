@@ -9,10 +9,11 @@ import org.testng.annotations.Test;
 
 import static com.example.teamcity.api.enums.Endpoint.PROJECTS;
 import static io.qameta.allure.Allure.step;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class CreateProjectTest extends BaseUiTest{
 
-    @Test(description = "User should be able to create project", groups = {"Positive"})
+    @Test(description = "User should be able to create project", groups = {"Positive", "Regression"})
     public void userCreatesProject() {
         // подготовка окружения
         step("Login as user");
@@ -31,7 +32,8 @@ public class CreateProjectTest extends BaseUiTest{
         // проверка состояния API
         // (корректность отправки данных с UI на API)
         step("Check that all entities (project, build type) was successfully created with correct data on API level");
-        var createdProject = superUserCheckRequests.<Project>getRequest(PROJECTS).read("name:" + testData.getProject().getName());
+        var createdProject = superUserCheckRequests.<Project>getRequest(PROJECTS).readWithTimeout(
+                "name:" + testData.getProject().getName(), 10, SECONDS, 1, SECONDS);
         softy.assertNotNull(createdProject);
 
         // проверка состояния UI
@@ -47,7 +49,7 @@ public class CreateProjectTest extends BaseUiTest{
         softy.assertTrue(foundProjects);
     }
 
-    @Test(description = "User should not be able to craete project without name", groups = {"Negative"})
+    @Test(description = "User should not be able to craete project without name", groups = {"Negative", "Regression"})
     public void userCreatesProjectWithoutName() {
         // подготовка окружения
         step("Login as user");

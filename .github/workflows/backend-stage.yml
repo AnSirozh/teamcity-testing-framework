@@ -1,0 +1,19 @@
+name: Deploy backend
+
+on: workflow_call
+
+# Это лишь примерные степы, как может выглядеть пайплайн бекенда, тк нет доступа к коду
+# иначе здесь были бы шиги для билда и деплоя бэка
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build backend
+        run: echo Собирается билд бекенда \(прогоняются юнит тетсы при сборке\), формируется и публикуется Docker образ
+
+  deploy-stage:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy backend to stage/review app
+        run: echo Просиходит деплой бекенда

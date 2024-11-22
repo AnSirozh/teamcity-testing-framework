@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 import com.example.teamcity.ui.pages.BasePage;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public abstract class CreateBasePage extends BasePage {
@@ -16,6 +17,7 @@ public abstract class CreateBasePage extends BasePage {
     protected SelenideElement connectionSuccessfulMessage = $(".connectionSuccessful");
 
     protected void baseCreateForm(String url) {
+        urlInput.shouldBe(visible);
         urlInput.val(url);
         submitButton.click();
         connectionSuccessfulMessage.should(Condition.appear, BASE_WAITING);

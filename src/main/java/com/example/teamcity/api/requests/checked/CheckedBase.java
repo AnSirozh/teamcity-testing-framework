@@ -9,6 +9,11 @@ import com.example.teamcity.api.requests.unchecked.UncheckedBase;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
+
 @SuppressWarnings("unchecked")
 public final class CheckedBase<T extends BaseModel> extends Request implements CrudInterface {
 
@@ -57,5 +62,24 @@ public final class CheckedBase<T extends BaseModel> extends Request implements C
                 .delete(id)
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().asString();
+    }
+
+
+    public T readWithTimeout(String locator, long timeout, TimeUnit timeoutUnit, long pollInterval, TimeUnit pollIntervalUnit) {
+        return await()
+                .atMost(timeout, timeoutUnit)
+                .pollInterval(pollInterval, pollIntervalUnit)
+                .until(() -> attemptRead(locator), Objects::nonNull);
+    }
+
+    private T attemptRead(String locator) {
+        return (T) uncheckedBase
+                .read(locator)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .extract()
+                .as(endpoint.getModelClass());
+
     }
 }
